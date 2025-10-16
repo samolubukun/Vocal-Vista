@@ -343,9 +343,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](./LICENSE
 
 ### 🎤 **Ready to Transform Your Voice?**
 
-**[🚀 Try VocalVista Now](https://your-demo-link.com)** 
-
-**Built with ❤️ by the VocalVista Team**
+**[🚀 Try VocalVista Now](https://vocalvista.netlify.app/)** 
 
 *Empowering confident communicators worldwide, one voice at a time.*
 
