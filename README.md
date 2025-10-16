@@ -10,6 +10,7 @@ An intelligent voice coaching platform powered by cutting-edge AI technology. Vo
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge)](./LICENSE)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg?style=for-the-badge)](https://nodejs.org/)
 [![Next.js](https://img.shields.io/badge/Next.js-14+-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![Netlify](https://img.shields.io/badge/deploy-netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://www.netlify.com/)
 [![Vercel](https://img.shields.io/badge/deploy-vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com)
 
 <img width="2560" height="1160" alt="Screenshot (565)" src="https://github.com/user-attachments/assets/e0731fd6-ffbd-4c0c-b70c-07dfd3df4778" />
