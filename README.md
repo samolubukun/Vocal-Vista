@@ -12,8 +12,7 @@ An intelligent voice coaching platform powered by cutting-edge AI technology. Vo
 [![Next.js](https://img.shields.io/badge/Next.js-14+-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 [![Vercel](https://img.shields.io/badge/deploy-vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com)
 
-![Demo Preview](<img width="2560" height="1160" alt="Screenshot (565)" src="https://github.com/user-attachments/assets/e0731fd6-ffbd-4c0c-b70c-07dfd3df4778" />
-)
+<img width="2560" height="1160" alt="Screenshot (565)" src="https://github.com/user-attachments/assets/e0731fd6-ffbd-4c0c-b70c-07dfd3df4778" />
 
 </div>
 
