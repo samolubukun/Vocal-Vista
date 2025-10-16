@@ -12,9 +12,8 @@ An intelligent voice coaching platform powered by cutting-edge AI technology. Vo
 [![Next.js](https://img.shields.io/badge/Next.js-14+-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 [![Vercel](https://img.shields.io/badge/deploy-vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com)
 
-![Demo Preview](https://github.com/user-attachments/assets/ea320086-efc0-4385-a131-03794bdfc52f)
-
-[🚀 Live Demo](https://your-demo-link.com) • [📖 Documentation](https://docs.your-site.com) • [🐛 Report Bug](https://github.com/your-username/ai-voice-coach/issues) • [💡 Request Feature](https://github.com/your-username/ai-voice-coach/issues)
+![Demo Preview](<img width="2560" height="1160" alt="Screenshot (565)" src="https://github.com/user-attachments/assets/e0731fd6-ffbd-4c0c-b70c-07dfd3df4778" />
+)
 
 </div>
 
@@ -107,6 +106,16 @@ Our intelligent **STT-LLM-TTS pipeline** creates seamless voice-to-voice interac
 
 </div>
 
+## 📷 Screenshots
+
+<img width="2560" height="1158" alt="Screenshot (570)" src="https://github.com/user-attachments/assets/3760aea3-0095-4744-9358-b9972a91ed89" />
+<img width="2560" height="1173" alt="Screenshot (572)" src="https://github.com/user-attachments/assets/274aab1a-c873-461f-97a8-b3b9e80669dd" />
+<img width="2560" height="1140" alt="Screenshot (573)" src="https://github.com/user-attachments/assets/477f190c-5b7e-4cb6-a688-f380b9f667fd" />
+<img width="2560" height="1185" alt="Screenshot (575)" src="https://github.com/user-attachments/assets/41f89817-7072-44b4-bfb2-f0775e58d91e" />
+<img width="2560" height="1140" alt="Screenshot (578)" src="https://github.com/user-attachments/assets/b5197572-5632-47b6-9465-8acf24d31190" />
+<img width="2560" height="1098" alt="Screenshot (585)" src="https://github.com/user-attachments/assets/f7cf665f-fc5f-46d4-b98e-74664b71122b" />
+
+
 ### 🏗️ **Architecture Overview**
 
 | Component | Technology | Purpose |
@@ -129,7 +138,7 @@ Our intelligent **STT-LLM-TTS pipeline** creates seamless voice-to-voice interac
 
 ```bash
 # 1️⃣ Clone the repository
-git clone https://github.com/your-username/vocal-vista.git
+git clone https://github.com/samolubukun/Vocal-Vista.git
 cd vocal-vista
 
 # 2️⃣ Install dependencies
