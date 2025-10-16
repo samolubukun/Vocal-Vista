@@ -342,9 +342,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](./LICENSE
 
 ### 🎤 **Ready to Transform Your Voice?**
 
-**[🚀 Try VocalVista Now](https://your-demo-link.com)** • **[📚 Read the Docs](https://docs.your-site.com)** • **[💬 Join Discord](https://discord.gg/your-server)**
-
----
+**[🚀 Try VocalVista Now](https://your-demo-link.com)** 
 
 **Built with ❤️ by the VocalVista Team**
 
