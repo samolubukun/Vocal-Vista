@@ -219,7 +219,7 @@ export default function LandingPage() {
             {/* Footer */}
             <footer className="border-t border-border bg-muted/30">
                 <div className="max-w-7xl mx-auto px-6 py-8 text-center text-sm text-muted-foreground">
-                    <p>© {new Date().getFullYear()} AI Voice Coach. Empowering confident communicators worldwide.</p>
+                    <p>© {new Date().getFullYear()} Vocal Vista. Empowering confident communicators worldwide.</p>
                 </div>
             </footer>
         </div>
