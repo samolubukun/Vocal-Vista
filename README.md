@@ -13,7 +13,7 @@ An intelligent voice coaching platform powered by cutting-edge AI technology. Vo
 [![Netlify](https://img.shields.io/badge/deploy-netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://www.netlify.com/)
 [![Vercel](https://img.shields.io/badge/deploy-vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com)
 
-<img width="2560" height="1160" alt="Screenshot (565)" src="https://github.com/user-attachments/assets/e0731fd6-ffbd-4c0c-b70c-07dfd3df4778" />
+![vocalvista](https://github.com/user-attachments/assets/7bab6646-9203-4f8e-8cc9-78ad6c1c6c20)
 
 </div>
 
