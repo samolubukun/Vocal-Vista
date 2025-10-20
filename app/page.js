@@ -107,7 +107,9 @@ export default function LandingPage() {
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 max-w-4xl mx-auto">
                             {stats.map((stat, index) => (
                                 <div key={index} className="text-center">
-                                    <div className="text-3xl md:text-4xl font-bold text-foreground mb-2">{stat.value}</div>
+                                    <div className="text-3xl md:text-4xl font-bold text-foreground mb-2 blur-sm hover:blur-none transition-all duration-300">
+                                      {stat.value}
+                                    </div>
                                     <div className="text-sm text-muted-foreground">{stat.label}</div>
                                 </div>
                             ))}
