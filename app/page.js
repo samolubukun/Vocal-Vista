@@ -40,15 +40,18 @@ export default function LandingPage() {
             {/* Header */}
             <header className="sticky top-0 z-50 backdrop-blur-xl bg-background/80 border-b border-border">
                 <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
-                    <Link href="/">
-                        <div className="relative w-40 h-12">
+                    <Link href="/" className="flex items-center gap-3">
+                        <div className="relative w-12 h-12">
                             <Image 
                                 src="/logo.svg" 
-                                alt="AI Voice Coach" 
+                                alt="Vocal Vista Logo" 
                                 fill
                                 className="object-contain"
                             />
                         </div>
+                        <span className="text-2xl font-bold text-foreground tracking-tight">
+                            Vocal <span className="text-primary">Vista</span>
+                        </span>
                     </Link>
                     <Button 
                         onClick={handleGetStarted}
