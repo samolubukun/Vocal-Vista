@@ -16,10 +16,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "VocalVista : AI Voice Coach",
-  description: "An intelligent voice coaching platform built with Next.js, Convex, and modern Web APIs.",
+  title: "Réstoir Health : AI Skincare",
+  description: "Detect, track, and manage acne, pimples, and eczema through smart, personalized skincare powered by AI.",
   icons: {
     icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
   },
 };
 

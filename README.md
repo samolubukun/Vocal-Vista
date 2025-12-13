@@ -1,21 +1,365 @@
 <div align="center">
 
-# 🎤 VocalVista : AI Voice Coach
+# 🧴 Réstoir Health - AI-Powered Skincare
 
-### *Master Your Voice, Transform Your Impact*
+### *Restore Your Skin Confidence with Intelligent AI Care*
 
-An intelligent voice coaching platform powered by cutting-edge AI technology. VocalVista leverages Deepgram's speech recognition, Gemini AI for conversational responses, and Deepgram's text-to-speech synthesis in a seamless **STT-LLM-TTS pipeline** to deliver personalized coaching experiences.
+An advanced AI-powered skincare platform that detects, analyzes, and helps you manage acne, pimples, eczema, and other skin conditions. Réstoir Health combines dermatology-grade AI analysis with personalized skincare routines and product recommendations to transform your skin health.
 
-[![Production Ready](https://img.shields.io/badge/status-production--ready-success.svg?style=for-the-badge)](https://github.com/your-username/ai-voice-coach)
+[![Production Ready](https://img.shields.io/badge/status-production--ready-success.svg?style=for-the-badge)](https://github.com/samolubukun/restoir-health)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge)](./LICENSE)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg?style=for-the-badge)](https://nodejs.org/)
-[![Next.js](https://img.shields.io/badge/Next.js-14+-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
-[![Netlify](https://img.shields.io/badge/deploy-netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://www.netlify.com/)
+[![Next.js](https://img.shields.io/badge/Next.js-15+-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 [![Vercel](https://img.shields.io/badge/deploy-vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com)
 
-![vocalvista](https://github.com/user-attachments/assets/7bab6646-9203-4f8e-8cc9-78ad6c1c6c20)
+</div>
+
+---
+
+## ✨ What is Réstoir Health?
+
+Réstoir Health transforms the way you care for your skin through **AI-powered analysis and personalized routines**. Whether you're struggling with acne, managing eczema, treating hyperpigmentation, or simply seeking to improve your skin health, our platform provides intelligent insights and actionable guidance tailored specifically to you.
+
+### 🎯 **The Magic Behind Réstoir Health**
+
+```
+📸 Upload Photo
+    ↓
+🧠 AI Skin Analysis (Gemini Vision)
+    ↓
+📊 Condition Detection & Scoring
+    ↓
+🛍️ Product Recommendations
+    ↓
+📋 Personalized Routine Options
+    ↓
+📈 Progress Tracking & Follow-ups
+```
+
+Our intelligent **vision-analysis pipeline** creates comprehensive skincare insights:
+- 📷 **AI Skin Detection** → Identifies conditions with dermatology-grade accuracy
+- 🧠 **Smart Analysis** → Provides detailed assessment and recommendations
+- 🛍️ **Product Matching** → Suggests proven products from your local pharmacies
+- 📋 **Routine Building** → Creates multiple routine options for different needs
+- 📊 **Progress Monitoring** → Tracks improvements over time with visual comparisons
+
+---
+
+## 🚀 Key Features
+
+<table>
+<tr>
+<td width="50%">
+
+### 🎯 **Core Features**
+- 📸 **AI Skin Scan** - Detect acne, pimples, eczema with AI precision
+- 📅 **Daily Tracker** - Log products and habits to identify patterns
+- 📈 **Progress Visuals** - Side-by-side photo comparisons
+- 🤖 **AI Chat Companion** - Ask skincare questions anytime
+- 💡 **Smart Recommendations** - AI-powered product suggestions
+- 🛒 **Product Discovery** - Browse dermatologist-approved items
+- 📝 **Personalized Routines** - Multiple routine options to choose from
+
+</td>
+<td width="50%">
+
+### 💎 **Advanced Capabilities**
+- 🎨 **Beautiful Dashboard** - Track all your skincare data
+- 🔐 **Secure Analysis** - Your skin data is private and protected
+- 🌍 **Localized Products** - Focus on products available in Africa
+- 📊 **Detailed Analytics** - Understand your skin patterns
+- 🎯 **Goal Setting** - Create and track skincare goals
+- 👥 **User Profiles** - Manage multiple user profiles
+- ⚡ **Real-time Processing** - Instant analysis results
+
+</td>
+</tr>
+</table>
+
+---
+
+## 🛠️ Technology Stack
+
+<div align="center">
+
+### **Frontend Architecture**
+![Next.js](https://img.shields.io/badge/Next.js-15+-black?style=for-the-badge&logo=next.js)
+![React](https://img.shields.io/badge/React-18+-61DAFB?style=for-the-badge&logo=react)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript)
+
+### **AI & Image Processing**
+![Google Gemini](https://img.shields.io/badge/Gemini_AI-4285F4?style=for-the-badge&logo=google)
+![Vision API](https://img.shields.io/badge/Vision_Analysis-FF6B6B?style=for-the-badge)
+
+### **Backend & Database**
+![Convex](https://img.shields.io/badge/Convex-FF6B35?style=for-the-badge)
+![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js)
+
+### **Authentication & UI**
+[![Stack Frame](https://img.shields.io/badge/Stack-Auth-7B61FF?style=for-the-badge)](https://stack.so)
+[![Radix UI](https://img.shields.io/badge/Radix_UI-7B61FF?style=for-the-badge)](https://radix-ui.com)
 
 </div>
+
+---
+
+## 🏗️ **Architecture Overview**
+
+| Component | Technology | Purpose |
+|-----------|------------|---------|
+| **🎨 Frontend** | Next.js 15, React 18, Tailwind CSS | Server-rendered UI with modern styling |
+| **🧠 AI Engine** | Google Gemini 2.5 Flash | Vision analysis for skin conditions |
+| **📷 Image Analysis** | Gemini Vision API | Detailed skin condition detection |
+| **💾 Database** | Convex | Real-time backend with instant sync |
+| **🔐 Authentication** | Stack Framework | Secure user authentication |
+| **🎭 UI Components** | Radix UI + shadcn/ui | Accessible, beautiful components |
+| **📊 Analytics** | Convex Queries | Real-time data tracking |
+
+---
+
+## 🚀 Quick Start
+
+### 📋 **Prerequisites**
+- **Node.js** 18+ installed
+- **npm** or **yarn** package manager
+- **Git** for version control
+- **Gemini API Key** from Google AI Studio
+- **Convex Account** for backend
+
+### ⚡ **Installation**
+
+```bash
+# 1️⃣ Clone the repository
+git clone https://github.com/samolubukun/restoir-health.git
+cd restoir-health
+
+# 2️⃣ Install dependencies
+npm install
+
+# 3️⃣ Set up environment variables
+cp .env.example .env.local
+```
+
+### 🔐 **Environment Configuration**
+
+Create a `.env.local` file with the following variables:
+
+```env
+# 🏢 Convex Backend
+NEXT_PUBLIC_CONVEX_URL=your_convex_deployment_url
+
+# 🧠 AI Configuration  
+GEMINI_API_KEY=your_gemini_api_key
+
+# 🔐 Stack Authentication
+NEXT_PUBLIC_STACK_APP_ID=your_stack_app_id
+NEXT_PUBLIC_STACK_PUBLISH_KEY=your_stack_publish_key
+STACK_SECRET_SERVER_KEY=your_stack_secret_key
+```
+
+### 🏃‍♂️ **Development**
+
+```bash
+# Start the development server
+npm run dev
+
+# Open your browser
+open http://localhost:3000
+```
+
+### 🔧 **Additional Setup**
+
+```bash
+# Deploy Convex backend
+npx convex deploy
+
+# Build for production
+npm run build
+
+# Start production server
+npm start
+```
+
+---
+
+## 📊 Project Structure
+
+```
+Réstoir-Health/
+├── app/
+│   ├── (main)/                    # Main app routes
+│   │   ├── dashboard/             # Dashboard & features
+│   │   ├── scan-result/           # Scan results & analysis
+│   │   ├── daily-tracker/         # Daily habit tracking
+│   │   ├── progress/              # Progress visualization
+│   │   ├── recommendations/       # Smart recommendations
+│   │   ├── chat/                  # AI chat interface
+│   │   └── products/              # Product discovery
+│   ├── api/
+│   │   ├── skin-analysis/         # AI skin analysis endpoint
+│   │   ├── chat/                  # Chat API
+│   │   ├── product-usage-guide/   # Routine generation
+│   │   └── ...                    # Other API routes
+│   └── layout.js                  # Root layout
+├── components/
+│   ├── ProductRecommendations.jsx # Product cards
+│   └── ui/                        # Reusable UI components
+├── convex/                        # Backend functions
+│   ├── schema.js                  # Database schema
+│   ├── users.js                   # User management
+│   ├── skinScans.js               # Scan storage
+│   └── ...                        # Other database functions
+├── public/                        # Static assets
+│   ├── logo.png                   # App logo
+│   ├── favicon.svg                # Favicon
+│   └── ...                        # Images and icons
+└── package.json                   # Dependencies
+
+```
+
+---
+
+## 🌐 Deployment
+
+### 🚀 **One-Click Deploy to Vercel** *(Recommended)*
+
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy to production
+vercel --prod
+
+# Deploy Convex backend
+npx convex deploy
+```
+
+### 📦 **Manual Deployment Options**
+
+<details>
+<summary><strong>🔵 Vercel Deployment</strong></summary>
+
+1. Push code to GitHub
+2. Connect repository to Vercel
+3. Add environment variables in Vercel dashboard
+4. Deploy with one click
+5. Run `npx convex deploy` to deploy backend
+
+</details>
+
+<details>
+<summary><strong>☁️ Traditional Hosting</strong></summary>
+
+```bash
+# Build the application
+npm run build
+
+# Start production server
+npm start
+
+# Deploy Convex functions
+npx convex deploy
+```
+
+</details>
+
+### 🔧 **Production Environment Variables**
+
+```env
+# Required for all deployments
+NEXT_PUBLIC_CONVEX_URL=https://your-convex-deployment.convex.cloud
+GEMINI_API_KEY=your_production_gemini_key
+NEXT_PUBLIC_STACK_APP_ID=your_stack_app_id
+NEXT_PUBLIC_STACK_PUBLISH_KEY=your_stack_publish_key
+STACK_SECRET_SERVER_KEY=your_stack_secret_key
+
+# Optional: Custom domain configuration
+NEXTAUTH_URL=https://your-domain.com
+```
+
+---
+
+## 📈 Performance & Best Practices
+
+### ⚡ **Optimization Features**
+- 🎯 **Real-time Processing** - Sub-second analysis with Gemini
+- 📱 **Mobile Responsive** - Optimized for all device sizes
+- 🔒 **Security First** - API key scoping and rate limiting
+- 🎨 **Modern UI/UX** - Beautiful interface with smooth animations
+- 📊 **Efficient Caching** - Convex real-time sync for instant updates
+
+### 💰 **Cost Management**
+- **Gemini API Usage** - Monitor vision API calls and implement limits
+- **Convex Scaling** - Database operations scale automatically
+- **Image Storage** - Optimize image sizes and compression
+- **Free Tier Benefits** - Generous free tier for personal use
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions from the community! Here's how you can help:
+
+### 🐛 **Reporting Issues**
+- Use the [GitHub Issues](https://github.com/samolubukun/restoir-health/issues) page
+- Include detailed reproduction steps
+- Provide browser/environment information
+
+### 💡 **Feature Requests**
+- Check existing issues before creating new ones
+- Provide clear use cases and benefits
+- Include mockups or examples when possible
+
+### 🔧 **Development Contributions**
+
+```bash
+# 1️⃣ Fork the repository
+# 2️⃣ Create a feature branch
+git checkout -b feature/amazing-feature
+
+# 3️⃣ Make your changes
+# 4️⃣ Test your changes
+npm run dev
+
+# 5️⃣ Commit with clear messages
+git commit -m "feat: add amazing feature"
+
+# 6️⃣ Push and create PR
+git push origin feature/amazing-feature
+```
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License** - see the [LICENSE](./LICENSE) file for details.
+
+---
+
+## 🙏 Acknowledgments
+
+- **[Google AI](https://ai.google.dev/)** - For Gemini's powerful vision capabilities
+- **[Convex](https://convex.dev)** - For seamless real-time backend infrastructure
+- **[Vercel](https://vercel.com)** - For effortless deployment and hosting
+- **[Stack](https://stack.so)** - For secure authentication framework
+- **[Radix UI](https://radix-ui.com)** - For accessible UI components
+
+---
+
+<div align="center">
+
+### 🧴 **Ready to Transform Your Skin?**
+
+**[🚀 Try Réstoir Health Now](https://restoir-health.vercel.app/)** 
+
+*Empowering healthier skin confidence worldwide, one scan at a time.*
+
+**⭐ Star this repo if you found it helpful!**
+
+</div>
+
+---
 
 ---
 
