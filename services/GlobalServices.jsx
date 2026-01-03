@@ -149,7 +149,7 @@ export class DeepgramSTTService {
     start() {
         if (this.isListening) return;
         
-        const apiKey = process.env.NEXT_PUBLIC_DEEPGRAM_API_KEY || '98d34339d1c4d0d819b6e0f537c99b594171364e';
+        const apiKey = process.env.NEXT_PUBLIC_DEEPGRAM_API_KEY || 'deepgram_api_key';
         
         this.socket = new WebSocket(
             `wss://api.deepgram.com/v1/listen?model=nova-2&language=en-US&encoding=linear16&sample_rate=16000&channels=1&interim_results=true&punctuate=true&smart_format=true`,
