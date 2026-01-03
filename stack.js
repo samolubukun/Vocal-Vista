@@ -7,7 +7,7 @@ export const stackServerApp = new StackServerApp({
   publishableClientKey: process.env.NEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY,
   secretServerKey: process.env.STACK_SECRET_SERVER_KEY,
   tokenStore: "nextjs-cookie",
-  urls: {
+  routes: {
     afterSignIn: "/dashboard",
     afterSignUp: "/dashboard",
     signIn: "/handler/sign-in",

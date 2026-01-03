@@ -2,7 +2,7 @@ import { UserContext } from '@/app/_context/UserContext'
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { useUser } from '@stackframe/stack';
-import { Wallet2, Scan, Sparkles } from 'lucide-react';
+import { Wallet2 } from 'lucide-react';
 import Image from 'next/image';
 import React, { useContext } from 'react'
 
@@ -11,9 +11,9 @@ function Credits() {
     const user=useUser();
 
     const CalculateProgress=()=>{
-        const maxScans = userData?.subscriptionId ? 1000 : 50;
+        const maxTokens = userData?.subscriptionId ? 100000 : 10000;
         const credits = Number(userData?.credits ?? 0);
-        const pct = maxScans > 0 ? (credits / maxScans) * 100 : 0;
+        const pct = maxTokens > 0 ? (credits / maxTokens) * 100 : 0;
         return Math.min(100, Math.max(0, Math.round(pct)));
     }
 
@@ -33,10 +33,8 @@ function Credits() {
             </div>
             <hr className='my-3' />
             <div>
-                <h2 className='font-bold flex items-center gap-2'>
-                    <Scan className='w-4 h-4' /> Scan Credits
-                </h2>
-                <h2 className='text-muted-foreground'>{userData?.credits ?? 0}/{(userData?.subscriptionId ? 1000 : 50)} scans remaining</h2>
+                <h2 className='font-bold'>Token Usage</h2>
+                <h2>{userData?.credits ?? 0}/{(userData?.subscriptionId ? 100000 : 10000).toLocaleString()} Credits</h2>
                 <Progress value={CalculateProgress()} className='my-3'/>
 
                 <div className='flex justify-between items-center mt-3'>
@@ -48,17 +46,13 @@ function Credits() {
                 <div className='mt-5 p-5 border rounded-2xl'>
                     <div className='flex justify-between'>
                         <div>
-                            <h2 className='font-bold flex items-center gap-2'>
-                                <Sparkles className='w-4 h-4 text-primary' /> Pro Plan
-                            </h2>
-                            <h2 className='text-sm text-muted-foreground'>1,000 scans/month</h2>
-                            <h2 className='text-sm text-muted-foreground'>Unlimited AI chat</h2>
-                            <h2 className='text-sm text-muted-foreground'>Priority support</h2>
+                            <h2 className='font-bold'>Pro Plan</h2>
+                            <h2>100,000 Credits</h2>
                         </div>
                         <h2 className='font-bold'>$10/Month</h2>
                     </div>
                     <hr className='my-3'/>
-                    <Button className='w-full cursor-pointer bg-gradient-to-r from-[#E8C77A] via-[#C9A44A] to-[#8FAF6A] hover:from-[#E8C77A]/90 hover:via-[#C9A44A]/90 hover:to-[#8FAF6A]/90 text-white border-0'> <Wallet2/> Upgrade $10</Button>
+                    <Button className='w-ful cursor-pointer'> <Wallet2/> Upgrade $10</Button>
                 </div>
             </div>
         </div>

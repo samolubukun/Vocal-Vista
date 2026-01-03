@@ -13,11 +13,7 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
-import type * as chatHistory from "../chatHistory.js";
-import type * as dailyLogs from "../dailyLogs.js";
-import type * as products from "../products.js";
-import type * as scanRecommendations from "../scanRecommendations.js";
-import type * as skinScans from "../skinScans.js";
+import type * as DiscussionRoom from "../DiscussionRoom.js";
 import type * as users from "../users.js";
 
 /**
@@ -29,11 +25,7 @@ import type * as users from "../users.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
-  chatHistory: typeof chatHistory;
-  dailyLogs: typeof dailyLogs;
-  products: typeof products;
-  scanRecommendations: typeof scanRecommendations;
-  skinScans: typeof skinScans;
+  DiscussionRoom: typeof DiscussionRoom;
   users: typeof users;
 }>;
 export declare const api: FilterApi<

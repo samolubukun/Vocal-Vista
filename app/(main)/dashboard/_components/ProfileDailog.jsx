@@ -16,7 +16,7 @@ function ProfileDailog({children}) {
     <DialogTrigger asChild>{children}</DialogTrigger>
     <DialogContent>
         <DialogHeader>
-            <DialogTitle>Your Profile</DialogTitle>
+            <DialogTitle>Are you absolutely sure?</DialogTitle>
             <DialogDescription asChild>
                 <Credits />
             </DialogDescription>
