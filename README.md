@@ -1,335 +1,149 @@
-## ✨ What is VocalVista?
+<div align="center">
+  <img src="public/logo.svg" width="100" alt="VocalVista Logo" />
+  <h1>🎙️ VocalVista — AI-Native Voice-to-Voice Coach</h1>
+  
+  <p align="center">
+    <img src="https://img.shields.io/badge/Next.js-15-000000?style=for-the-badge&logo=next.js&logoColor=white&labelColor=0F172A" alt="Next.js" />
+    <img src="https://img.shields.io/badge/Convex-Backend-8B5CF6?style=for-the-badge&logo=convex&logoColor=white&labelColor=312E81" alt="Convex" />
+    <img src="https://img.shields.io/badge/Deepgram-V2V_Agent-000000?style=for-the-badge&logo=deepgram&logoColor=white&labelColor=312E81" alt="Deepgram V2V" />
+    <img src="https://img.shields.io/badge/Gemini-3.1_Flash--Lite-8E75FF?style=for-the-badge&logo=google-gemini&logoColor=white&labelColor=312E81" alt="Gemini" />
+    <img src="https://img.shields.io/badge/Tailwind-CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white&labelColor=0C4A6E" alt="Tailwind" />
+    <img src="https://img.shields.io/badge/Stack_Auth-Identity-F43F5E?style=for-the-badge&logo=auth0&logoColor=white&labelColor=881337" alt="Auth" />
+  </p>
+</div>
 
-VocalVista transforms the way people develop their speaking skills through **AI-powered voice coaching**. Whether you're preparing for job interviews, perfecting presentations, learning new languages, or building confidence in public speaking, our platform provides real-time feedback and personalized guidance.
+### Real-Time Conversational Coaching & Speech Mastery
 
-### 🎯 **The Magic Behind VocalVista**
+VocalVista is an AI-native voice-coaching workspace designed to sharpen public speaking, interview delivery, storytelling, and language fluency. Powered by a unified WebSocket voice-to-voice stream, VocalVista matches you with specialized AI expert personas to simulate low-latency interactive scenarios, analyze verbal habits, and generate comprehensive progress diagnostics.
+
+---
+
+## Why VocalVista?
+
+Traditional voice coaches or basic AI audio models suffer from high-latency processing loops and rigid conversational turn-taking. If you interrupt a normal assistant, it remains deaf to your voice until it finishes playing its long pre-generated response.
+
+Here is how VocalVista solves this via a **Unified Voice-to-Voice (V2V) Sandbox**:
+
+| Feature Dimension | Traditional AI Audio Hops | The VocalVista V2V Engine |
+| :--- | :--- | :--- |
+| **Conversational Latency** | ❌ **Stitched Lag (3s - 5s)**. Sequentially processes STT $\rightarrow$ LLM HTTP $\rightarrow$ TTS API calls. | 🟢 **Sub-Second Streaming**. Orchestrates listening, thinking, and speaking in a single unified WebSocket pipe. |
+| **User Interruption** | ❌ **Deaf Playback**. Forces you to wait out the entire generated speech block or manual tap-to-stop. | 🟢 **Instant Duplex Halting**. WebSocket detects voice overlap instantly, halts playing audio, and shifts context. |
+| **Coaching Personas** | ❌ **Generic Voiceovers**. Single robotic narrator for all topics. | 🟢 **Aura Expert Cast**. Handcrafted voices mapped to expert coaches (Ethan, Sofia, Justin, Brian, Amy). |
+| **Credit Monitoring** | ❌ **Post-Call Cost Surprises**. Opaque billing models calculated after call completion. | 🟢 **Real-Time Character Billing**. Continuously monitors and deducts credit balances on-the-fly. |
+| **Post-Session Summaries** | ❌ **Simple Transcripts**. Bare text dumps without structured improvement areas. | 🟢 **Gemini Diagnostics**. Generates deep structured feedback reports and personalized notes. |
+
+---
+
+## The Engine: Unified Temporal Architecture
+
+VocalVista operates on a bi-directional WebSocket interface communicating with Deepgram's Voice Agent client.
+
+### Interactive Data Flow
 
 ```mermaid
-graph LR
-    A[🎙️ User Speech] --> B[📡 Deepgram STT]
-    B --> C[🧠 Gemini AI Processing]
-    C --> D[🔊 Deepgram TTS]
-    D --> E[👂 AI Voice Response]
+graph TD
+    %% Styling Nodes
+    classDef client fill:#0f172a,stroke:#475569,stroke-width:2px,color:#f8fafc;
+    classDef convex fill:#1e1b4b,stroke:#9C00FF,stroke-width:2px,color:#e0e7ff;
+    classDef dg fill:#1e1b4b,stroke:#00C7B7,stroke-width:2px,color:#e0e7ff;
     
-    style A fill:#e1f5fe
-    style C fill:#f3e5f5
-    style E fill:#e8f5e8
+    %% User Actions
+    User([User speaks into microphone]) -->|1. Real-time Audio Stream| Client[Spatial Mic Processor]
+    
+    %% Web Socket Stream
+    Client -->|2. Direct 24kHz Linear16 WebSockets| Agent[Deepgram Voice Agent API]
+    
+    %% AI Generation & Synthesis
+    Agent -->|3. Audio stream back to browser queue| Speaker[Browser Speaker Queue]
+    Agent -->|4. Live ConversationText packet| Transcripts[ChatBox Transcript Canvas]
+    
+    %% Credit Billing and Session Save
+    Transcripts -->|5. Real-time Credit Billing| DB[(Convex Database)]
+    DB -->|6. Save conversation history on disconnect| FeedbackBoard[Gemini 3.1 Flash-Lite Summary]
+    
+    class User,Client,Speaker client;
+    class DB,FeedbackBoard convex;
+    class Agent,Transcripts dg;
 ```
 
-Our intelligent **STT-LLM-TTS pipeline** creates seamless voice-to-voice interactions:
-- 🎤 **Real-time Speech Recognition** → Captures your voice with millisecond precision
-- 🧠 **AI Processing** → Analyzes content and generates personalized responses  
-- 🔊 **Natural Voice Synthesis** → Delivers coaching in professional voices
+---
+
+## Core Features
+
+-   **Unified Voice-to-Voice**: Sub-second, full-duplex conversational voice training powered directly by Deepgram's Voice Agent API.
+-   **Interactive Coaching Modes**: Toggle specialized modes including Mock Interviews, Presentation Prep, Debate Practice, Language Learning, and Mindfulness Meditation.
+-   **Expert Coach Cast**: Train with dedicated personas including Sofia (Warm & Encouraging), Ethan (Professional & Structured), or Justin (Dynamic & Energetic).
+-   **Detailed Feedback Diagnostics**: Receive comprehensive post-session analysis, structured coaching notes, and action plans powered by Gemini 3.1 Flash-Lite.
+-   **Dynamic Call Transcripts**: Track your conversation visually with real-time speech-bubble logs that stream alongside the live voice session.
+-   **Real-time Credit Protection**: Dynamic character-billing safely auto-suspends your call if credit balances hit zero, preventing unexpected costs.
 
 ---
 
-## 🚀 Key Features
-
-<table>
-<tr>
-<td width="50%">
-
-### 🎯 **Smart Coaching Modes**
-- 💼 **Mock Interviews** - Practice with AI interviewers
-- 🎤 **Presentation Training** - Perfect your delivery
-- 🗣️ **Debate Practice** - Sharpen your arguments
-- 📚 **Language Learning** - Improve pronunciation
-- 📖 **Storytelling** - Craft compelling narratives
-- 🧘 **Meditation Guidance** - Mindful speaking
-- 🔤 **Pronunciation Drills** - Perfect your accent
-- 💪 **Confidence Coaching** - Build speaking confidence
-
-</td>
-<td width="50%">
-
-### 🎭 **Expert Voice Personas**
-- 👨‍🏫 **Ethan** - Professional & Authoritative
-- 👩‍💼 **Sofia** - Warm & Encouraging  
-- 👨‍💻 **Justin** - Dynamic & Energetic
-- 👩‍🎨 **Amy** - Creative & Inspiring
-- 👨‍🔬 **Brian** - Analytical & Precise
-
-### 📊 **Advanced Analytics**
-- 📈 Real-time progress tracking
-- 📋 Detailed session summaries
-- 🎯 Personalized improvement suggestions
-- 📝 Comprehensive coaching notes
-
-</td>
-</tr>
-</table>
-
----
-
-## 🛠️ Technology Stack
+## Screenshots
 
 <div align="center">
-
-### **Frontend Architecture**
-![Next.js](https://img.shields.io/badge/Next.js-14+-black?style=for-the-badge&logo=next.js)
-![React](https://img.shields.io/badge/React-18+-61DAFB?style=for-the-badge&logo=react)
-![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css)
-![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript)
-
-### **AI & Voice Processing**
-![Deepgram](https://img.shields.io/badge/Deepgram-000000?style=for-the-badge&logo=deepgram)
-![Google Gemini](https://img.shields.io/badge/Gemini_AI-4285F4?style=for-the-badge&logo=google)
-
-### **Backend & Database**
-![Convex](https://img.shields.io/badge/Convex-FF6B35?style=for-the-badge)
-![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js)
-
-### **Deployment & Tools**
-[![Netlify](https://img.shields.io/badge/deploy-netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://www.netlify.com/)
-![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker)
-
+  <img width="2560" height="1158" alt="Dashboard Preview" src="https://github.com/user-attachments/assets/3760aea3-0095-4744-9358-b9972a91ed89" />
+  <img width="2560" height="1173" alt="Active Session Preview" src="https://github.com/user-attachments/assets/274aab1a-c873-461f-97a8-b3b9e80669dd" />
+  <img width="2560" height="1140" alt="Session Summary Preview" src="https://github.com/user-attachments/assets/477f190c-5b7e-4cb6-a688-f380b9f667fd" />
+  <img width="2560" height="1185" alt="Analytics Preview" src="https://github.com/user-attachments/assets/41f89817-7072-44b4-bfb2-f0775e58d91e" />
+  <img width="2560" height="1140" alt="Profile Settings" src="https://github.com/user-attachments/assets/b5197572-5632-47b6-9465-8acf24d31190" />
 </div>
 
-## 📷 Screenshots
+---
 
-<img width="2560" height="1158" alt="Screenshot (570)" src="https://github.com/user-attachments/assets/3760aea3-0095-4744-9358-b9972a91ed89" />
-<img width="2560" height="1173" alt="Screenshot (572)" src="https://github.com/user-attachments/assets/274aab1a-c873-461f-97a8-b3b9e80669dd" />
-<img width="2560" height="1140" alt="Screenshot (573)" src="https://github.com/user-attachments/assets/477f190c-5b7e-4cb6-a688-f380b9f667fd" />
-<img width="2560" height="1185" alt="Screenshot (575)" src="https://github.com/user-attachments/assets/41f89817-7072-44b4-bfb2-f0775e58d91e" />
-<img width="2560" height="1140" alt="Screenshot (578)" src="https://github.com/user-attachments/assets/b5197572-5632-47b6-9465-8acf24d31190" />
-<img width="2560" height="1098" alt="Screenshot (585)" src="https://github.com/user-attachments/assets/f7cf665f-fc5f-46d4-b98e-74664b71122b" />
+## Voice Agent Capabilities
 
+VocalVista runs on a highly customizable instruction layout. It supports a comprehensive range of direct voice mechanics:
 
-### 🏗️ **Architecture Overview**
+| Coaching Dimension | Custom Instructions | Core Model | Target Outcome |
+| :--- | :--- | :--- | :--- |
+| **Mock Interview** | Interrogate on specific roles, provide constructive tips, keep short. | `gpt-4o` | Realistic HR panel simulations and professional posture. |
+| **Debate Lab** | Direct logical rebuttals, critique arguments. | `gpt-4o` | Rapid reasoning, cognitive clarity, and articulation skills. |
+| **Mindful Meditation** | Slow soothing speech, pacing, breathing instructions. | `gpt-4o` | Stress relief, pacing control, and clear voice breathing. |
+| **Language Practice** | Vocabulary guidance, syntax review, pronunciation guides. | `gpt-4o` | Pronunciation fluency, syntax corrections, and active speaking. |
 
-| Component | Technology | Purpose |
-|-----------|------------|---------|
-| **🎨 Frontend** | Next.js 14+, React 18, Tailwind CSS | Server-rendered UI with modern styling |
-| **🧠 AI Engine** | Google Gemini 2.0 Flash | Conversational AI for coaching responses |
-| **🎤 Speech-to-Text** | Deepgram WebSocket Streaming | Real-time voice transcription |
-| **🔊 Text-to-Speech** | Deepgram REST API | Professional voice synthesis |
-| **💾 Database** | Convex | Real-time backend with instant sync |
-| **🎭 UI Components** | Radix UI + shadcn/ui | Accessible, beautiful components |
+---
 
----## 🚀 Quick Start
+## Tech Stack
 
-### 📋 **Prerequisites**
-- **Node.js** 18+ installed
-- **npm** or **yarn** package manager
-- **Git** for version control
+-   **Frontend**: Next.js 15 (Turbopack), Tailwind CSS, Framer Motion, Radix UI.
+-   **Backend**: Convex (Real-time Database, Serverless Mutations & Queries).
+-   **Authentication**: Stack Auth (Cloud-native identity management).
+-   **V2V Engine**: Deepgram Voice Agent API (WebSocket duplex stream).
+-   **Diagnostics**: Google Gemini 3.1 Flash-Lite.
 
-### ⚡ **Installation**
+---
 
+## Getting Started
+
+### 1. Environment Configuration
+Create a `.env.local` file in your root folder:
+```env
+# 🏢 Convex Backend Deployment Configuration
+CONVEX_DEPLOYMENT=your_convex_deployment_name
+NEXT_PUBLIC_CONVEX_URL=your_convex_url
+
+# 🎤 Voice Processing API (Deepgram)
+DEEPGRAM_API_KEY=your_deepgram_api_key
+NEXT_PUBLIC_DEEPGRAM_API_KEY=your_deepgram_api_key
+
+# 🔐 Authentication (Stackframe)
+NEXT_PUBLIC_STACK_PROJECT_ID=your_stack_project_id
+NEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY=your_publishable_client_key
+STACK_SECRET_SERVER_KEY=your_secret_server_key
+
+# 🧠 Diagnostics (Google Gemini)
+GEMINI_API_KEY=your_gemini_api_key
+```
+
+### 2. Install & Run
 ```bash
-# 1️⃣ Clone the repository
-git clone https://github.com/samolubukun/Vocal-Vista.git
-cd vocal-vista
-
-# 2️⃣ Install dependencies
+# Install package dependencies
 npm install
 
-# 3️⃣ Set up environment variables
-cp .env.example .env.local
-```
-
-### 🔐 **Environment Configuration**
-
-Create a `.env.local` file with the following variables:
-
-```env
-# 🏢 Convex Backend
-NEXT_PUBLIC_CONVEX_URL=your_convex_deployment_url
-
-# 🧠 AI Configuration  
-GEMINI_API_KEY=your_gemini_api_key
-
-# 🎤 Voice Processing (Deepgram)
-NEXT_PUBLIC_DEEPGRAM_API_KEY=your_deepgram_api_key
-```
-
-> **🔒 Security Note:** `NEXT_PUBLIC_DEEPGRAM_API_KEY` is used client-side. Ensure proper API key scoping in production.
-
-### 🏃‍♂️ **Development**
-
-```bash
-# Start the development server
+# Start local server
 npm run dev
-
-# Open your browser
-open http://localhost:3000
-```
-
-### 🔧 **Additional Setup**
-
-```bash
-# Deploy Convex backend
-npx convex deploy
-
-# Build for production
-npm run build
-
-# Start production server
-npm start
 ```
 
 ---
-
-## 🌐 Deployment
-
-### 🚀 **One-Click Deploy to Vercel** *(Recommended)*
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/your-username/vocal-vista)
-
-### 📦 **Manual Deployment Options**
-
-<details>
-<summary><strong>🔵 Vercel Deployment</strong></summary>
-
-```bash
-# Install Vercel CLI
-npm i -g vercel
-
-# Deploy to production
-vercel --prod
-
-# Deploy Convex backend
-npx convex deploy
-```
-
-</details>
-
-<details>
-<summary><strong>🐳 Docker Deployment</strong></summary>
-
-```bash
-# Build Docker image
-docker build -t vocal-vista:latest .
-
-# Run container
-docker run -p 3000:3000 \
-  -e NEXT_PUBLIC_CONVEX_URL=your_url \
-  -e GEMINI_API_KEY=your_key \
-  -e NEXT_PUBLIC_DEEPGRAM_API_KEY=your_key \
-  vocal-vista:latest
-```
-
-</details>
-
-<details>
-<summary><strong>☁️ Traditional Hosting</strong></summary>
-
-```bash
-# Build the application
-npm run build
-
-# Start production server
-npm start
-
-# Deploy Convex functions
-npx convex deploy
-```
-
-</details>
-
-### 🔧 **Production Environment Variables**
-
-```env
-# Required for all deployments
-NEXT_PUBLIC_CONVEX_URL=https://your-convex-deployment.convex.cloud
-GEMINI_API_KEY=your_production_gemini_key
-NEXT_PUBLIC_DEEPGRAM_API_KEY=your_production_deepgram_key
-
-# Optional: Custom domain configuration
-NEXTAUTH_URL=https://your-domain.com
-```
-
----
-
-## 📊 Performance & Best Practices
-
-### ⚡ **Optimization Features**
-- 🎯 **Real-time Processing** - Sub-100ms response times with Deepgram streaming
-- 📱 **Mobile Responsive** - Optimized for all device sizes
-- 🔒 **Security First** - API key scoping and rate limiting implemented
-- 🎨 **Modern UI/UX** - Beautiful, accessible interface with smooth animations
-
-### 🏗️ **Scaling Recommendations**
-
-| Traffic Level | Configuration | Recommendations |
-|---------------|---------------|-----------------|
-| **👥 Small** (< 1K users) | Single Vercel deployment | Use free tiers, basic monitoring |
-| **🏢 Medium** (1K-10K users) | Load balancer + CDN | Implement caching, database optimization |
-| **🚀 Enterprise** (10K+ users) | Multi-region deployment | Auto-scaling, advanced monitoring, dedicated resources |
-
-### 💰 **Cost Management**
-- **Deepgram Usage** - Monitor STT/TTS API calls and implement usage limits
-- **Convex Scaling** - Database operations scale automatically
-- **Gemini AI** - Rate limit requests to control AI processing costs
-
----
-
-## 🤝 Contributing
-
-We welcome contributions from the community! Here's how you can help:
-
-### 🐛 **Reporting Issues**
-- Use the [GitHub Issues](https://github.com/your-username/vocal-vista/issues) page
-- Include detailed reproduction steps
-- Provide browser/environment information
-
-### 💡 **Feature Requests**
-- Check existing issues before creating new ones
-- Provide clear use cases and benefits
-- Include mockups or examples when possible
-
-### 🔧 **Development Contributions**
-
-```bash
-# 1️⃣ Fork the repository
-# 2️⃣ Create a feature branch
-git checkout -b feature/amazing-feature
-
-# 3️⃣ Make your changes
-# 4️⃣ Run tests
-npm test
-
-# 5️⃣ Commit with conventional commits
-git commit -m "feat: add amazing feature"
-
-# 6️⃣ Push and create PR
-git push origin feature/amazing-feature
-```
-
-### 📝 **Code Style**
-- Follow ESLint and Prettier configurations
-- Write meaningful commit messages
-- Add tests for new features
-- Update documentation as needed
-
----
-
-## 📄 License
-
-This project is licensed under the **MIT License** - see the [LICENSE](./LICENSE) file for details.
-
----
-
-## 🙏 Acknowledgments
-
-- **[Deepgram](https://deepgram.com)** - For exceptional voice AI technology
-- **[Google AI](https://ai.google.dev/)** - For Gemini's conversational capabilities  
-- **[Convex](https://convex.dev)** - For seamless real-time backend infrastructure
-- **[Vercel](https://vercel.com)** - For effortless deployment and hosting
-
----
-
-<div align="center">
-
-### 🎤 **Ready to Transform Your Voice?**
-
-**[🚀 Try VocalVista Now](https://vocalvista.netlify.app/)** 
-
-*Empowering confident communicators worldwide, one voice at a time.*
-
-**⭐ Star this repo if you found it helpful!**
-
-</div>
-
----
-
-
+*Built for real-time speech mastery.*
