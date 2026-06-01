@@ -18,21 +18,6 @@ VocalVista is an AI-native voice-coaching workspace designed to sharpen public s
 
 ---
 
-## Why VocalVista?
-
-Traditional voice coaches or basic AI audio models suffer from high-latency processing loops and rigid conversational turn-taking. If you interrupt a normal assistant, it remains deaf to your voice until it finishes playing its long pre-generated response.
-
-Here is how VocalVista solves this via a **Unified Voice-to-Voice (V2V) Sandbox**:
-
-| Feature Dimension | Traditional AI Audio Hops | The VocalVista V2V Engine |
-| :--- | :--- | :--- |
-| **Conversational Latency** | ❌ **Stitched Lag (3s - 5s)**. Sequentially processes STT $\rightarrow$ LLM HTTP $\rightarrow$ TTS API calls. | 🟢 **Sub-Second Streaming**. Orchestrates listening, thinking, and speaking in a single unified WebSocket pipe. |
-| **User Interruption** | ❌ **Deaf Playback**. Forces you to wait out the entire generated speech block or manual tap-to-stop. | 🟢 **Instant Duplex Halting**. WebSocket detects voice overlap instantly, halts playing audio, and shifts context. |
-| **Coaching Personas** | ❌ **Generic Voiceovers**. Single robotic narrator for all topics. | 🟢 **Aura Expert Cast**. Handcrafted voices mapped to expert coaches (Ethan, Sofia, Justin, Brian, Amy). |
-| **Credit Monitoring** | ❌ **Post-Call Cost Surprises**. Opaque billing models calculated after call completion. | 🟢 **Real-Time Character Billing**. Continuously monitors and deducts credit balances on-the-fly. |
-| **Post-Session Summaries** | ❌ **Simple Transcripts**. Bare text dumps without structured improvement areas. | 🟢 **Gemini Diagnostics**. Generates deep structured feedback reports and personalized notes. |
-
----
 
 ## The Engine: Unified Temporal Architecture
 
