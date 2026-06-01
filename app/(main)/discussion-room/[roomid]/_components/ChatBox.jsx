@@ -3,7 +3,7 @@ import { api } from '@/convex/_generated/api';
 import { AIModelToGenerateFeedbackAndNotes } from '@/services/GlobalServices'
 import { useMutation } from 'convex/react';
 import { LoaderCircle } from 'lucide-react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import { toast } from 'sonner';
 
@@ -12,6 +12,8 @@ function ChatBox({conversation,enableFeedbackNotes, coachingOption}) {
     const [loading,setLoading]=useState(false);
     const updateSummary = useMutation(api.DiscussionRoom.UpdateSummery)
     const {roomid}=useParams();
+    const router = useRouter();
+    
     const GenerateFeedbackNotes=async()=>{
         setLoading(true);
         try{
@@ -23,6 +25,7 @@ function ChatBox({conversation,enableFeedbackNotes, coachingOption}) {
             })
             setLoading(false);
             toast('Feedback/Notes Saved!')
+            router.push('/view-summary/' + roomid);
         }
         catch(e)
         {
