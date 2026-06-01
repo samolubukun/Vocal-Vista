@@ -14,9 +14,9 @@ function ProfileDailog({children}) {
     return (
         <Dialog>
     <DialogTrigger asChild>{children}</DialogTrigger>
-    <DialogContent>
+    <DialogContent className="max-w-md rounded-2xl">
         <DialogHeader>
-            <DialogTitle>Are you absolutely sure?</DialogTitle>
+            <DialogTitle className="text-xl font-bold text-foreground">My Profile & Billing</DialogTitle>
             <DialogDescription asChild>
                 <Credits />
             </DialogDescription>

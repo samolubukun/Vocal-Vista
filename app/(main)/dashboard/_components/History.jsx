@@ -8,10 +8,10 @@ import moment from 'moment';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useContext, useEffect, useState } from 'react'
-import { Trash2 } from 'lucide-react';
+import { Trash2, ArrowRight } from 'lucide-react';
 import { toast } from 'sonner';
 
-function History() {
+function History({ limit }) {
 
   const convex=useConvex();
   const {userData}=useContext(UserContext);
@@ -48,44 +48,82 @@ function History() {
     }
   }
 
+  const filteredList = discussionRoomList.filter((item)=> 
+    item.coachingOption=='Topic Based Lecture'||
+    item.coachingOption=='Learn Language'||
+    item.coachingOption=='Meditation'||
+    item.coachingOption=='Presentation Practice'||
+    item.coachingOption=='Storytelling'||
+    item.coachingOption=='Pronunciation Drill'
+  );
+
+  const displayList = limit ? filteredList.slice(0, limit) : filteredList;
+
   return (
-    <div>
-      <h2 className='font-bold text-xl'>Your Previous Lectures</h2>
-      {discussionRoomList?.length==0&&<h2 className='text-gray-400'>You don't have any previous lectures</h2>}
-      <div className='mt-5'>
-  {discussionRoomList.map((item, index)=> (item.coachingOption=='Topic Based Lecture'||item.coachingOption=='Learn Language'||item.coachingOption=='Meditation'||item.coachingOption=='Presentation Practice'||item.coachingOption=='Storytelling'||item.coachingOption=='Pronunciation Drill')&&
-        (
-          <div key={index} className='border-b-[1px] pb-3 mb-4 group flex justify-between items-center cursor-pointer'>
-            <div className='flex gap-7 items-center'>
-              <Image src={GetAbstractImages(item.coachingOption)} alt='abstract'
-              width={70}
-              height={70}
-              className='rounded-full h-[50px] w-[50px]'
-              />
-              <div>
-                <h2 className='font-bold'>{item.topic}</h2>
-                <h2 className='text-gray-400'>{item.coachingOption}</h2>
-                <h2 className='text-gray-400 text-sm'>{moment(item._creationTime).fromNow()}</h2>
+    <div className="space-y-4">
+      <div className="flex justify-between items-start sm:items-center gap-4">
+        <div className="space-y-0.5">
+          <h2 className='font-bold text-xl text-foreground flex items-center gap-2'>
+            Your Previous Lectures
+          </h2>
+          <p className='text-xs text-muted-foreground'>Your transcripts, custom speech notes, and fluency drills history.</p>
+        </div>
+        {limit && (
+          <Link href="/my-sessions">
+            <Button variant="ghost" size="sm" className="cursor-pointer text-xs font-bold text-muted-foreground hover:text-indigo-600 hover:bg-indigo-500/10 border border-transparent px-3 py-1.5 rounded-xl transition-all flex items-center gap-1.5">
+              View All <ArrowRight size={13} />
+            </Button>
+          </Link>
+        )}
+      </div>
+      {displayList?.length === 0 && (
+        <p className='text-muted-foreground text-sm py-4'>You don't have any previous lectures yet.</p>
+      )}
+      <div className='divide-y divide-border/60'>
+        {displayList.map((item, index)=> (
+            <div key={index} className='py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 group transition-colors hover:bg-muted/5 rounded-xl px-2'>
+              <div className='flex gap-4 items-center'>
+                <Image src={GetAbstractImages(item.coachingOption)} alt='abstract'
+                  width={60}
+                  height={60}
+                  className='rounded-full h-12 w-12 object-cover border border-border shadow-sm bg-background'
+                />
+                <div className="space-y-0.5">
+                  <h3 className='font-semibold text-foreground text-sm sm:text-base leading-snug'>{item.topic}</h3>
+                  <div className='flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground'>
+                    <span className="font-medium text-primary">{item.coachingOption}</span>
+                    <span className="text-border">•</span>
+                    <span className="px-1.5 py-0.5 rounded-md bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 font-bold text-[9px] uppercase tracking-wide border border-indigo-500/10">Lecture</span>
+                    <span className="text-border">•</span>
+                    <span>{moment(item._creationTime).fromNow()}</span>
+                  </div>
+                </div>
+              </div>
+              <div className='flex items-center gap-2 self-end sm:self-center'>
+                <Link href={'/view-summary/'+item._id}>
+                  <Button 
+                    variant='outline' 
+                    size='sm' 
+                    className='cursor-pointer text-xs font-bold px-3 py-1.5 h-8 transition-all hover:bg-indigo-600 hover:text-white hover:border-indigo-600'
+                  >
+                    View Notes
+                  </Button>
+                </Link>
+                <Button 
+                  variant='ghost' 
+                  size='icon'
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleDelete(item._id);
+                  }}
+                  className='cursor-pointer h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10'
+                  aria-label="Delete lecture"
+                >
+                  <Trash2 size={15} />
+                </Button>
               </div>
             </div>
-            <div className='flex items-center gap-2'>
-              <Link href={'/view-summery/'+item._id}>
-                <Button variant='outline' className='invisible group-hover:visible cursor-pointer'>View Notes</Button>
-              </Link>
-              <Button 
-                variant='outline' 
-                size='sm'
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleDelete(item._id);
-                }}
-                className='invisible group-hover:visible cursor-pointer text-red-600 hover:text-red-700 hover:bg-red-50'
-              >
-                <Trash2 size={16} />
-              </Button>
-            </div>
-          </div>
-        ))}
+          ))}
       </div>
     </div>
   )

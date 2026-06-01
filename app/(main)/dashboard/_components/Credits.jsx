@@ -18,41 +18,59 @@ function Credits() {
     }
 
     return (
-        <div>
-            <div className='flex gap-5 items-center'>
+        <div className="space-y-6 pt-4">
+            <div className='flex gap-4 items-center bg-muted/20 p-3 rounded-2xl border border-border/40'>
                 <Image src={user?.profileImageUrl} 
-                alt={user?.displayName ? `${user.displayName} avatar` : 'User avatar'}
-                width={60}
-                height={60}
-                className='rounded-full'
+                    alt={user?.displayName ? `${user.displayName} avatar` : 'User avatar'}
+                    width={50}
+                    height={50}
+                    className='rounded-full border border-border shadow-sm bg-background'
                 />
-                <div>
-                    <h2 className='text-lg font-bold'>{user?.displayName}</h2>
-                    <h2 className='text-gray-500'>{user?.primaryEmail}</h2>
+                <div className="space-y-0.5">
+                    <h2 className='text-base font-bold text-foreground leading-none'>{user?.displayName}</h2>
+                    <p className='text-xs text-muted-foreground'>{user?.primaryEmail}</p>
                 </div>
             </div>
-            <hr className='my-3' />
-            <div>
-                <h2 className='font-bold'>Token Usage</h2>
-                <h2>{userData?.credits ?? 0}/{(userData?.subscriptionId ? 100000 : 10000).toLocaleString()} Credits</h2>
-                <Progress value={CalculateProgress()} className='my-3'/>
-
-                <div className='flex justify-between items-center mt-3'>
-                    <h2 className='font-bold'>Current Plan</h2>
-                    <h2 className='p-1 bg-secondary rounded-lg px-2'>
-                        {userData?.subscriptionId ? 'Pro Plan' : 'Free Plan'}</h2>
+            
+            <div className="space-y-4">
+                <div className="space-y-2">
+                    <div className="flex justify-between items-end">
+                        <span className='font-bold text-sm text-foreground'>Token Usage Balance</span>
+                        <span className="text-xs font-semibold text-muted-foreground bg-muted px-2 py-0.5 rounded-full border border-border/40">
+                            {(userData?.credits ?? 0).toLocaleString()} / {(userData?.subscriptionId ? 100000 : 10000).toLocaleString()} Credits
+                        </span>
+                    </div>
+                    <Progress value={CalculateProgress()} className='h-2.5 rounded-full'/>
                 </div>
 
-                <div className='mt-5 p-5 border rounded-2xl'>
-                    <div className='flex justify-between'>
-                        <div>
-                            <h2 className='font-bold'>Pro Plan</h2>
-                            <h2>100,000 Credits</h2>
+                <div className='flex justify-between items-center bg-card p-3 rounded-xl border border-border/50'>
+                    <span className='font-bold text-sm text-foreground'>Current Active Plan</span>
+                    <span className={`text-xs font-bold px-2.5 py-1 rounded-full border ${
+                        userData?.subscriptionId 
+                            ? 'bg-primary/10 border-primary/30 text-primary' 
+                            : 'bg-muted border-border text-muted-foreground'
+                    }`}>
+                        {userData?.subscriptionId ? 'Pro Plan' : 'Free Sandbox'}
+                    </span>
+                </div>
+
+                <div className='p-5 bg-gradient-to-b from-card to-muted/10 border border-border/60 rounded-2xl space-y-4 shadow-sm relative overflow-hidden'>
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-2xl pointer-events-none"></div>
+                    <div className='flex justify-between items-start'>
+                        <div className="space-y-1">
+                            <h3 className='font-extrabold text-foreground'>VocalVista Pro</h3>
+                            <p className='text-xs text-muted-foreground'>Get 100,000 conversational speech credits.</p>
                         </div>
-                        <h2 className='font-bold'>$10/Month</h2>
+                        <div className="text-right">
+                            <span className='font-extrabold text-lg text-primary'>$10</span>
+                            <span className="text-[10px] text-muted-foreground block">per month</span>
+                        </div>
                     </div>
-                    <hr className='my-3'/>
-                    <Button className='w-ful cursor-pointer'> <Wallet2/> Upgrade $10</Button>
+                    <div className='h-px bg-border/60'></div>
+                    <Button className='w-full cursor-pointer flex items-center justify-center gap-2 font-semibold shadow-sm'> 
+                        <Wallet2 size={16} /> 
+                        Upgrade to Pro
+                    </Button>
                 </div>
             </div>
         </div>
