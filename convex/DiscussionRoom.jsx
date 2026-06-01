@@ -6,14 +6,26 @@ export const CreateNewRoom = mutation({
         coachingOption:v.string(),
         topic:v.string(),
         expertName:v.string(),
-        uid:v.optional(v.id('users'))
+        uid:v.optional(v.id('users')),
+        isChallenge:v.optional(v.boolean()),
+        challengeTopic:v.optional(v.string()),
+        challengeTimeLimit:v.optional(v.number()),
+        customScenario:v.optional(v.object({
+            jobTitle:v.string(),
+            companyName:v.optional(v.string()),
+            focusPoints:v.optional(v.array(v.string()))
+        }))
     },
     handler:async(ctx,args)=>{
         const result=await ctx.db.insert('DiscussionRoom',{
             coachingOption:args.coachingOption,
             topic:args.topic,
             expertName:args.expertName,
-            uid:args?.uid
+            uid:args?.uid,
+            isChallenge:args?.isChallenge,
+            challengeTopic:args?.challengeTopic,
+            challengeTimeLimit:args?.challengeTimeLimit,
+            customScenario:args?.customScenario
         });
 
         return result;
@@ -73,5 +85,22 @@ export const DeleteDiscussionRoom = mutation({
     },
     handler:async(ctx,args)=>{
         await ctx.db.delete(args.id);
+    }
+})
+
+export const UpdateAnalytics = mutation({
+    args:{
+        id:v.id('DiscussionRoom'),
+        analytics:v.object({
+            wpm:v.number(),
+            fillerWordCount:v.number(),
+            fillerWordsList:v.array(v.string()),
+            vocalPacingScore:v.number()
+        })
+    },
+    handler:async(ctx,args)=>{
+        await ctx.db.patch(args.id,{
+            analytics:args.analytics
+        })
     }
 })

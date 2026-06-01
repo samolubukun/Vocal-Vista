@@ -13,6 +13,33 @@ import { toast } from 'sonner';
 import { UserContext } from '@/app/_context/UserContext';
 import { DeepgramClient, AgentEvents } from "@deepgram/sdk";
 
+const countFillerWords = (text) => {
+    if (!text) return { count: 0, found: [] };
+    const fillers = ["uh", "um", "like", "you know"];
+    let count = 0;
+    let found = [];
+    
+    const cleanText = text.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+    let workingText = cleanText;
+    
+    if (workingText.includes("you know")) {
+        const occurrences = (workingText.match(/you know/g) || []).length;
+        count += occurrences;
+        for (let i = 0; i < occurrences; i++) found.push("you know");
+        workingText = workingText.replace(/you know/g, "");
+    }
+    
+    const words = workingText.split(/\s+/);
+    words.forEach(word => {
+        if (fillers.includes(word)) {
+            count++;
+            found.push(word);
+        }
+    });
+    
+    return { count, found };
+};
+
 function DiscussionRoom() {
     const { roomid } = useParams();
     const { userData, setUserData } = useContext(UserContext);
@@ -31,6 +58,12 @@ function DiscussionRoom() {
     const [enableFeedbackNotes, setEnableFeedbackNotes] = useState(false);
     const [sessionTime, setSessionTime] = useState(0);
 
+    // Live analytics states
+    const [fillerCount, setFillerCount] = useState(0);
+    const [fillerList, setFillerList] = useState([]);
+    const [wpm, setWpm] = useState(0);
+    const [totalWordsSpoken, setTotalWordsSpoken] = useState(0);
+
     // Ref to keep a fresh reference of userData to avoid stale state in interval
     const userDataRef = useRef(userData);
     useEffect(() => {
@@ -40,6 +73,9 @@ function DiscussionRoom() {
     // Mutation calls
     const UpdateConversation = useMutation(api.DiscussionRoom.UpdateConversation);
     const updateUserToken = useMutation(api.users.UpdateUserToken);
+    const updateUserStreak = useMutation(api.users.UpdateUserStreak);
+    const addSpeakingMinutes = useMutation(api.users.AddSpeakingMinutes);
+    const updateAnalytics = useMutation(api.DiscussionRoom.UpdateAnalytics);
 
     // Deepgram Voice Agent connection refs
     const agentClientRef = useRef(null);
@@ -346,25 +382,37 @@ function DiscussionRoom() {
                 throw new Error(text || "Failed to fetch temporary voice agent token.");
             }
             const { token } = await tokenResponse.json();
-
+ 
             // 2. Initialize Agent client using the short-lived proxy token
             const agentClient = new DeepgramClient({ key: token }).agent();
             agentClientRef.current = agentClient;
-
+ 
             // 3. Set up event handlers
             agentClient.once(AgentEvents.Welcome, () => {
                 const coachingOption = CoachingOptions.find(item => item.name === DiscussionRoomData.coachingOption);
-                const customPrompt = coachingOption.prompt.replace('{user_topic}', DiscussionRoomData.topic);
+                let customPrompt = coachingOption.prompt.replace('{user_topic}', DiscussionRoomData.topic);
 
+                // Inject custom scenario or challenge instructions into system prompt!
+                if (DiscussionRoomData.customScenario) {
+                    const cs = DiscussionRoomData.customScenario;
+                    customPrompt += `\n\nCRITICAL CONTEXT: This is a custom mock interview. You are playing the character of a friendly but professional interviewer at "${cs.companyName || 'our company'}". The user is interviewing for the role of "${cs.jobTitle}". Your primary focus should be assessing: ${cs.focusPoints ? cs.focusPoints.join(', ') : 'their communication skills'}. Stay in character, ask highly relevant questions, and provide constructive professional feedback at the end.`;
+                } else if (DiscussionRoomData.isChallenge && DiscussionRoomData.challengeTopic) {
+                    customPrompt += `\n\nCRITICAL CONTEXT: The user is doing an impromptu speaking challenge on the topic: "${DiscussionRoomData.challengeTopic}". Guide them gently, encourage them to talk for the full minute, and provide friendly feedback on their pacing and flow.`;
+                }
+ 
                 const voice = voiceMap[expert?.name] || voiceMap.default;
-
+ 
                 const settings = {
                     audio: {
                         input: { encoding: "linear16", sample_rate: 24000 },
                         output: { encoding: "linear16", sample_rate: 24000, container: "none" }
                     },
                     agent: {
-                        greeting: `Hi there! I'm ${expert?.name}, your ${DiscussionRoomData?.coachingOption} coach. Welcome to our session on ${DiscussionRoomData?.topic}. Let's get started.`,
+                        greeting: DiscussionRoomData.isChallenge 
+                            ? `Hi there! Ready for your impromptu challenge? Your topic is: "${DiscussionRoomData.challengeTopic}". You have one minute. Start speaking whenever you're ready!`
+                            : (DiscussionRoomData.customScenario 
+                                ? `Hello! I'm ${expert?.name}, your interviewer today for the ${DiscussionRoomData.customScenario.jobTitle} position at ${DiscussionRoomData.customScenario.companyName}. It's great to have you. Let's start with a brief introduction.` 
+                                : `Hi there! I'm ${expert?.name}, your ${DiscussionRoomData?.coachingOption} coach. Welcome to our session on ${DiscussionRoomData?.topic}. Let's get started.`),
                         listen: { provider: { type: "deepgram", model: "nova-2" } },
                         speak: { provider: { type: "deepgram", model: voice } },
                         think: { 
@@ -373,29 +421,29 @@ function DiscussionRoom() {
                         }
                     }
                 };
-
+ 
                 agentClient.configure(settings);
             });
-
+ 
             agentClient.once(AgentEvents.SettingsApplied, () => {
                 setConnected(true);
                 setEnableMic(true);
                 setLoading(false);
                 toast('Connected to Deepgram Voice Agent!');
-
+ 
                 // Start Streaming Microphone input
                 startMicStream(agentClient);
             });
-
+ 
             agentClient.on(AgentEvents.Audio, (audioChunk) => {
                 playAgentAudioChunk(audioChunk);
             });
-
+ 
             agentClient.on(AgentEvents.UserStartedSpeaking, () => {
                 // Interruption Support: halt playback immediately and clear queue
                 stopSpeakerAudio();
             });
-
+ 
             agentClient.on(AgentEvents.ConversationText, async (message) => {
                 // Direct V2V transcripts
                 setConversation(prev => [...prev, {
@@ -406,21 +454,38 @@ function DiscussionRoom() {
                 // Track current interim speech
                 if (message.role === 'user') {
                     setTranscribe(message.content);
+
+                    // Parse filler words & total words
+                    const parsed = countFillerWords(message.content);
+                    if (parsed.count > 0) {
+                        setFillerCount(prev => prev + parsed.count);
+                        setFillerList(prev => [...prev, ...parsed.found]);
+                    }
+                    
+                    const wordCount = message.content.split(/\s+/).filter(Boolean).length;
+                    setTotalWordsSpoken(prev => {
+                        const newTotal = prev + wordCount;
+                        // Calculate WPM dynamically
+                        setSessionTime(time => {
+                            const minutes = time > 0 ? (time / 60) : (1 / 60);
+                            setWpm(Math.round(newTotal / minutes));
+                            return time;
+                        });
+                        return newTotal;
+                    });
                 }
-
-                // Billing removed per character, now per minute
             });
-
+ 
             agentClient.on(AgentEvents.Error, (err) => {
                 console.error("❌ Agent error:", err);
                 const errMsg = err?.message || JSON.stringify(err) || "Unknown connection error";
                 toast(`Agent error: ${errMsg}`);
             });
-
+ 
             agentClient.on(AgentEvents.Close, () => {
                 setConnected(false);
             });
-
+ 
             agentClient.keepAlive();
             const interval = setInterval(() => {
                 if (agentClientRef.current) {
@@ -429,43 +494,83 @@ function DiscussionRoom() {
                     clearInterval(interval);
                 }
             }, 8000);
-
+ 
         } catch (error) {
             console.error("❌ Connection failed:", error);
             setLoading(false);
             toast(`Connection failed: ${error.message}`);
         }
     };
-
+ 
     // === END DEEPGRAM SESSION ===
     const disconnect = async (e) => {
-        e.preventDefault();
+        if (e && e.preventDefault) e.preventDefault();
         setLoading(true);
-
+ 
         try {
             // Stop input microphone streaming
             stopMicStream();
-
+ 
             // Stop output audio queue
             stopSpeakerAudio();
-
+ 
             // Disconnect Deepgram WebSocket client
             if (agentClientRef.current) {
                 agentClientRef.current.disconnect();
                 agentClientRef.current = null;
             }
-
+ 
             // Close Audio Contexts
             if (audioContextRef.current) {
                 await audioContextRef.current.close();
                 audioContextRef.current = null;
             }
-
+ 
             setEnableMic(false);
             setConnected(false);
             setTranscribe('');
-            toast('Disconnected!');
+            toast('Session complete! Saving your metrics...');
 
+            // Calculate final pacing score
+            const pacingScore = Math.max(0, Math.min(100, Math.round(
+                100 - (fillerCount * 5) - (Math.abs(wpm - 130) * 0.5)
+            )));
+
+            // Save analytics to database
+            await updateAnalytics({
+                id: DiscussionRoomData._id,
+                analytics: {
+                    wpm: wpm || 130,
+                    fillerWordCount: fillerCount,
+                    fillerWordsList: fillerList,
+                    vocalPacingScore: pacingScore
+                }
+            });
+
+            // Update user streak & active minutes
+            if (userDataRef.current?._id) {
+                const today = new Date().toISOString().split('T')[0];
+                const streakResult = await updateUserStreak({
+                    id: userDataRef.current._id,
+                    todayDateStr: today
+                });
+                
+                const minutes = Math.max(1, Math.round(sessionTime / 60));
+                const minsResult = await addSpeakingMinutes({
+                    id: userDataRef.current._id,
+                    minutes: minutes
+                });
+
+                // Update context state
+                setUserData(prev => ({
+                    ...prev,
+                    streakCount: streakResult.streakCount,
+                    unlockedBadges: streakResult.unlockedBadges || minsResult.unlockedBadges
+                }));
+
+                toast.success('Progress saved! Streaks and speaking active minutes updated.');
+            }
+ 
             // Save conversation state to database
             await UpdateConversation({
                 id: DiscussionRoomData._id,
@@ -473,6 +578,7 @@ function DiscussionRoom() {
             });
         } catch (error) {
             console.error("❌ Disconnect error:", error);
+            toast.error("Failed to save final analytics: " + error.message);
         } finally {
             setLoading(false);
             setEnableFeedbackNotes(true);
@@ -482,7 +588,7 @@ function DiscussionRoom() {
     // Unused, per-minute billing is handled via triggerMinuteBilling inside useEffect
 
     return (
-        <div className='max-w-7xl mx-auto'>
+        <div className='max-w-7xl mx-auto pb-12'>
             <div className='mb-8'>
                 <div className='flex items-center gap-3 mb-2'>
                     <div className='h-10 w-1 bg-primary rounded-full'></div>
@@ -513,6 +619,14 @@ function DiscussionRoom() {
                             <div className='absolute top-6 right-6 z-10 flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 backdrop-blur-md shadow-sm'>
                                 <div className='h-1.5 w-1.5 rounded-full bg-indigo-500 animate-pulse'></div>
                                 <span className='text-xs font-bold text-indigo-600 dark:text-indigo-400 tracking-wider'>{formatTime(sessionTime)}</span>
+                            </div>
+                        )}
+
+                        {/* Surprise Impromptu Challenge Pill */}
+                        {DiscussionRoomData?.isChallenge && DiscussionRoomData?.challengeTopic && (
+                            <div className='absolute top-6 left-6 z-10 p-3.5 bg-indigo-500/10 border border-indigo-500/20 rounded-2xl backdrop-blur-md max-w-[280px] shadow-sm'>
+                                <h4 className='text-[10px] font-extrabold text-indigo-400 uppercase tracking-wider mb-1'>🔥 Impromptu Challenge</h4>
+                                <p className='text-xs font-bold text-foreground leading-normal'>"{DiscussionRoomData.challengeTopic}"</p>
                             </div>
                         )}
 
@@ -612,8 +726,40 @@ function DiscussionRoom() {
                     </div>
                 </div>
 
-                {/* Chat Section */}
-                <div className='lg:col-span-1'>
+                {/* Chat & Analytics Section */}
+                <div className='lg:col-span-1 space-y-6'>
+                    {/* Live Analytics Dashboard */}
+                    {connected && (
+                        <div className='bg-card border border-border rounded-3xl shadow-lg p-5 bg-gradient-to-br from-card to-muted/20 space-y-4'>
+                            <h3 className='font-extrabold text-foreground text-xs uppercase tracking-wider border-b border-border pb-2 flex items-center justify-between'>
+                                <span>📊 Live Speaking Stats</span>
+                                <span className='text-[9px] font-extrabold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-2 py-0.5 rounded-full uppercase tracking-wider'>Active</span>
+                            </h3>
+                            <div className='grid grid-cols-2 gap-3.5'>
+                                <div className='p-3 bg-muted/20 border border-border/60 rounded-2xl flex flex-col justify-center items-center text-center'>
+                                    <span className='text-2xl font-black text-indigo-500'>{wpm || 0}</span>
+                                    <span className='text-[9px] font-extrabold text-muted-foreground uppercase tracking-wide mt-1'>WPM Pace</span>
+                                </div>
+                                <div className='p-3 bg-muted/20 border border-border/60 rounded-2xl flex flex-col justify-center items-center text-center'>
+                                    <span className='text-2xl font-black text-rose-500'>{fillerCount}</span>
+                                    <span className='text-[9px] font-extrabold text-muted-foreground uppercase tracking-wide mt-1'>Filler Count</span>
+                                </div>
+                            </div>
+                            <div className='p-3.5 bg-muted/25 rounded-2xl border border-border/40 space-y-1.5'>
+                                <div className='flex justify-between items-center text-[11px] font-extrabold uppercase tracking-wide'>
+                                    <span className='text-muted-foreground'>Vocal Pacing Score</span>
+                                    <span className='text-primary'>{Math.max(0, Math.min(100, Math.round(100 - (fillerCount * 5) - (Math.abs((wpm || 130) - 130) * 0.5))))}%</span>
+                                </div>
+                                <div className='w-full bg-border rounded-full h-1.5 overflow-hidden'>
+                                    <div 
+                                        className='bg-primary h-1.5 rounded-full transition-all duration-500'
+                                        style={{ width: `${Math.max(0, Math.min(100, Math.round(100 - (fillerCount * 5) - (Math.abs((wpm || 130) - 130) * 0.5))))}%` }}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                     <div className='bg-card border border-border rounded-3xl shadow-lg overflow-hidden'>
                         <div className='bg-gradient-to-r from-primary/10 to-accent/10 px-6 py-4 border-b border-border'>
                             <h3 className='font-semibold text-card-foreground'>Conversation</h3>

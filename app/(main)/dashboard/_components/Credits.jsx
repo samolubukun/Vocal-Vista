@@ -53,25 +53,6 @@ function Credits() {
                         {userData?.subscriptionId ? 'Pro Plan' : 'Free Sandbox'}
                     </span>
                 </div>
-
-                <div className='p-5 bg-gradient-to-b from-card to-muted/10 border border-border/60 rounded-2xl space-y-4 shadow-sm relative overflow-hidden'>
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-2xl pointer-events-none"></div>
-                    <div className='flex justify-between items-start'>
-                        <div className="space-y-1">
-                            <h3 className='font-extrabold text-foreground'>VocalVista Pro</h3>
-                            <p className='text-xs text-muted-foreground'>Get 100,000 conversational speech credits.</p>
-                        </div>
-                        <div className="text-right">
-                            <span className='font-extrabold text-lg text-primary'>$10</span>
-                            <span className="text-[10px] text-muted-foreground block">per month</span>
-                        </div>
-                    </div>
-                    <div className='h-px bg-border/60'></div>
-                    <Button className='w-full cursor-pointer flex items-center justify-center gap-2 font-semibold shadow-sm'> 
-                        <Wallet2 size={16} /> 
-                        Upgrade to Pro
-                    </Button>
-                </div>
             </div>
         </div>
     )
