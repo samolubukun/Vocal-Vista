@@ -18,7 +18,7 @@ export const CreateUser=mutation({
             const data={
                 name:args.name,
                 email:args.email,
-                credits:10000
+                credits:120
             }
             const result=await ctx.db.insert('users',{
                 ...data
