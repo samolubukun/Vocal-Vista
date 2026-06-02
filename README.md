@@ -66,13 +66,10 @@ graph TD
 
 ## Screenshots
 
-<div align="center">
-  <img width="2560" height="1158" alt="Dashboard Preview" src="https://github.com/user-attachments/assets/3760aea3-0095-4744-9358-b9972a91ed89" />
-  <img width="2560" height="1173" alt="Active Session Preview" src="https://github.com/user-attachments/assets/274aab1a-c873-461f-97a8-b3b9e80669dd" />
-  <img width="2560" height="1140" alt="Session Summary Preview" src="https://github.com/user-attachments/assets/477f190c-5b7e-4cb6-a688-f380b9f667fd" />
-  <img width="2560" height="1185" alt="Analytics Preview" src="https://github.com/user-attachments/assets/41f89817-7072-44b4-bfb2-f0775e58d91e" />
-  <img width="2560" height="1140" alt="Profile Settings" src="https://github.com/user-attachments/assets/b5197572-5632-47b6-9465-8acf24d31190" />
-</div>
+<img width="1920" height="2634" alt="screencapture-vocalvista-netlify-app-dashboard-2026-06-02-01_06_32" src="https://github.com/user-attachments/assets/3eb4d1ec-e99c-4a90-9c4b-fa7869d4560b" />
+<img width="1920" height="852" alt="Screenshot (47)" src="https://github.com/user-attachments/assets/d833db62-0611-41b7-8159-a519ff5a8985" />
+<img width="1920" height="829" alt="Screenshot (48)" src="https://github.com/user-attachments/assets/f39b48bf-d7b3-4267-8755-a84885dc05b1" />
+<img width="1920" height="1029" alt="screencapture-vocalvista-netlify-app-view-summary-j57c3akt3xfzspz12j42kjx05987t8e4-2026-06-02-01_03_23" src="https://github.com/user-attachments/assets/82c26644-5696-459e-85f0-128429351ff1" />
 
 ---
 
