@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from '@/components/ui/button';
 import { useUser } from "@stackframe/stack";
 import { 
@@ -17,7 +17,23 @@ export default function LandingPage() {
     const router = useRouter();
     const [activeCoach, setActiveCoach] = useState(0);
 
+    // Auto-redirect authenticated users directly to the dashboard if they are logging in
+    useEffect(() => {
+        if (user && typeof window !== "undefined") {
+            const isInitiating = sessionStorage.getItem('initiating_login');
+            const referrer = document.referrer || "";
+            // Route straight to dashboard if flag is set, or if they are returning from the login handler
+            if (isInitiating === 'true' || referrer.includes('/handler/sign-in') || referrer.includes('/handler/sign-up')) {
+                sessionStorage.removeItem('initiating_login');
+                router.replace('/dashboard');
+            }
+        }
+    }, [user, router]);
+
     const handleGetStarted = () => {
+        if (typeof window !== "undefined") {
+            sessionStorage.setItem('initiating_login', 'true');
+        }
         router.push('/dashboard');
     };
 
