@@ -278,14 +278,20 @@ function DiscussionRoom() {
         try {
             const isFirefox = navigator.userAgent.includes('Firefox');
             
-            // Build browser constraints
+            // Build browser constraints with hardware echo-cancellation triggers
             const constraints = isFirefox ? {
-                audio: { echoCancellation: true }
+                audio: { 
+                    echoCancellation: true,
+                    noiseSuppression: true
+                }
             } : {
                 audio: {
                     echoCancellation: true,
                     noiseSuppression: true,
                     autoGainControl: true,
+                    googEchoCancellation: true,
+                    googNoiseSuppression: true,
+                    googAutoGainControl: true,
                     sampleRate: 24000,
                     channelCount: 1
                 }
@@ -310,6 +316,20 @@ function DiscussionRoom() {
                 if (!clientInstance || clientInstance.connectionState === 'closed') return;
 
                 const inputData = e.inputBuffer.getChannelData(0);
+                
+                // Calculate RMS (Root Mean Square) energy of the audio chunk
+                let sum = 0;
+                for (let i = 0; i < inputData.length; i++) {
+                    sum += inputData[i] * inputData[i];
+                }
+                const rms = Math.sqrt(sum / inputData.length);
+                
+                // If agent is speaking, filter out small acoustic speaker bleeds / echo loops (RMS < 0.02)
+                // If the user actually interrupts loudly, their voice energy will pass through normally!
+                if (isAgentSpeaking && rms < 0.02) {
+                    return;
+                }
+
                 let processedData = inputData;
 
                 // Handle downsampling from Firefox default 48kHz to 24kHz
@@ -687,6 +707,12 @@ function DiscussionRoom() {
                                 </div>
                             ) : (
                                 <p className='text-sm text-muted-foreground'>Ready to start coaching</p>
+                            )}
+
+                            {enableMic && (
+                                <p className='text-[10px] text-muted-foreground/60 mt-3.5 bg-muted/40 px-3 py-1 rounded-full border border-border/20 font-medium'>
+                                    🎧 Use headphones to prevent echo loops
+                                </p>
                             )}
 
                             {/* Transcription Display */}
