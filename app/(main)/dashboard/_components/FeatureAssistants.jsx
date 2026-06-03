@@ -21,7 +21,8 @@ function FeatureAssistants() {
             option.name === 'Meditation' ||
             option.name === 'Presentation Practice' ||
             option.name === 'Storytelling' ||
-            option.name === 'Pronunciation Drill';
+            option.name === 'Pronunciation Drill' ||
+            option.name === 'Tech & Data Explainer';
             
         if (activeFilter === 'lectures') return isLecture;
         if (activeFilter === 'feedback') return !isLecture;
@@ -34,7 +35,8 @@ function FeatureAssistants() {
             name === 'Meditation' ||
             name === 'Presentation Practice' ||
             name === 'Storytelling' ||
-            name === 'Pronunciation Drill';
+            name === 'Pronunciation Drill' ||
+            name === 'Tech & Data Explainer';
     }
 
     return (
