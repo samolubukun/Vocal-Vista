@@ -54,7 +54,8 @@ function History({ limit }) {
     item.coachingOption=='Meditation'||
     item.coachingOption=='Presentation Practice'||
     item.coachingOption=='Storytelling'||
-    item.coachingOption=='Pronunciation Drill'
+    item.coachingOption=='Pronunciation Drill'||
+    item.coachingOption=='Tech & Data Explainer'
   );
 
   const displayList = limit ? filteredList.slice(0, limit) : filteredList;
