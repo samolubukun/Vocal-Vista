@@ -52,7 +52,11 @@ function Feedback({ limit }) {
     item.coachingOption=='Mock Interview'||
     item.coachingOption=='Ques Ans Prep'||
     item.coachingOption=='Debate Practice'||
-    item.coachingOption=='Confidence Coaching'
+    item.coachingOption=='Confidence Coaching'||
+    item.coachingOption=='Salary Negotiation'||
+    item.coachingOption=='Social Mastery'||
+    item.coachingOption=='Conflict Resolution'||
+    item.coachingOption=='Pitch Perfect'
   );
 
   const displayList = limit ? filteredList.slice(0, limit) : filteredList;
