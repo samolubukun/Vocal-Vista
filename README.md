@@ -66,8 +66,8 @@ graph TD
 
 ## Screenshots
 
-<img width="1920" height="2634" alt="screencapture-vocalvista-netlify-app-dashboard-2026-06-02-01_06_32" src="https://github.com/user-attachments/assets/3eb4d1ec-e99c-4a90-9c4b-fa7869d4560b" />
-<img width="1920" height="852" alt="Screenshot (47)" src="https://github.com/user-attachments/assets/d833db62-0611-41b7-8159-a519ff5a8985" />
+<img width="1920" height="3060" alt="screencapture-vocal-vista-vercel-app-dashboard-2026-06-03-07_06_22" src="https://github.com/user-attachments/assets/3f474288-657f-4529-911e-737a0536a4e6" />
+<img width="1920" height="863" alt="Screenshot (50)" src="https://github.com/user-attachments/assets/cd78f424-20fc-4503-b4f2-267525d6d3e9" />
 <img width="1920" height="829" alt="Screenshot (48)" src="https://github.com/user-attachments/assets/f39b48bf-d7b3-4267-8755-a84885dc05b1" />
 <img width="1920" height="1029" alt="screencapture-vocalvista-netlify-app-view-summary-j57c3akt3xfzspz12j42kjx05987t8e4-2026-06-02-01_03_23" src="https://github.com/user-attachments/assets/82c26644-5696-459e-85f0-128429351ff1" />
 
